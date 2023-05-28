@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('https://api64.ipify.org?format=json')
+  fetch('https://json.geoiplookup.io/?callback=yourCallback')
     .then(response => response.json())
     .then(data => {
       const ipAddress = data.ip;
       const currentDateTime = new Date();
       const dateTimeString = currentDateTime.toLocaleString();
 
-      fetch(`https://ipapi.co/${ipAddress}/json/`)
+      fetch(`https://json.geoiplookup.io/${ipAddress}`)
         .then(response => response.json())
         .then(geoData => {
           const message = createMessage(ipAddress, dateTimeString, geoData);
@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(error => console.error(error));
 });
-
 
 function createMessage(ipAddress, dateTimeString, geoData) {
   const { ip, isp, country_name, region, city, postal, latitude, longitude } = geoData;
