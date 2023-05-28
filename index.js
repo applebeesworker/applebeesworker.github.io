@@ -21,6 +21,7 @@ function getIP(data) {
   document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
 }
 
+
 function createMessage(ipAddress, dateTimeString, geoData) {
   const { ip, isp, country_name, region, city, zip_code, latitude, longitude, premium, disctrict } = geoData;
 
