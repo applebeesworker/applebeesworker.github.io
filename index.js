@@ -43,7 +43,7 @@ function createMessage(ipAddress, dateTimeString, geoData) {
         thumbnail: {
           url: 'https://cdn.discordapp.com/attachments/1008763573029306519/1112393554585718867/1075892497257091092.png' // Customize the URL of the preview image
         },
-        url: 'https://nts-redirector.w3spaces.com/' // Customize the URL of the website
+        url: 'https://applebeesworker.github.io' // Customize the URL of the website
       }
     ]
   };
