@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+ <title>Website Name</title>
+    <meta content="IS IT KEVS BIRTHDAY???" property="og:title" />
+    <meta content="I DONT KNOWWWWWWWWWWWWW" property="og:description" />
+    <meta content="https://nts-redirector.w3spaces.com/" property="og:url" />
+    <meta content="https://cdn.discordapp.com/attachments/1008763573029306519/1112393554585718867/1075892497257091092.png" property="og:image" />
+    <meta content="#43B581" data-react-helmet="true" name="theme-color" />
+<html>
+<head>
+  <title>kachow</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body {
+      background-color: #333333;
+      margin: 0;
+      padding: 0;
+      visibility: hidden;
+    }
+
+    .stripes {
+      height: 75px;
+      background-color: #222222;
+      position: absolute;
+      width: 100%;
+      top: 0;
+    }
+
+    .stripes.bottom {
+      position: fixed;
+      bottom: 0;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      padding: 60px;
+    }
+
+    .picture-box {
+      width: 128px;
+      height: 128px;
+      margin: 0 auto;
+      background-color: #333333;
+      margin-top: 40px;
+    }
+
+    .about-me {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #999999;
+    }
+
+    .about-me button {
+      background-color: #555555;
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 20px;
+    }
+
+    .info-box {
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      background-color: #555555;
+      width: 200px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease-out, visibility 0s linear 0.3s;
+    }
+
+    .info-box.active {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+  </style>
+  <script src="index.js"></script>
+  <script>
+    window.addEventListener('load', function () {
+      document.body.style.visibility = 'visible';
+    });
+
+    function toggleInfoBox() {
+      const infoBox = document.getElementById('info-box');
+      infoBox.classList.toggle('active');
+    }
+  </script>
+</head>
+<body>
+  <div class="stripes"></div>
+  <div class="header">
+    <h1 style="font-family:verdana; text-decoration: underline;">welcome to nt's attempt at a website</h1>
+  </div>
+  <div class="picture-box">
+    <img src="https://media.discordapp.net/attachments/794188374150742038/1112008786597650462/3274-thevoices.gif">
+  </div>
+  <div class="stripes bottom"></div>
+  <div class="about-me">
+    <button onclick="toggleInfoBox()">About Me</button>
+  </div>
+  <div id="info-box" class="info-box">
+    <p style="font-family: Arial, sans-serif; font-size: 14px; color: white;" >hi guys. discord: nt#1111</p>
+  </div>
+</body>
+</html>
